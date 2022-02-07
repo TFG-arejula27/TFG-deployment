@@ -30,3 +30,6 @@ echo "OpenFaaS admin password: $PASSWORD"
 sleep 10
 
 kubectl port-forward -n openfaas svc/gateway 8080:8080 &
+
+echo -n $PASSWORD | faas-cli login -g $OPENFAAS_URL -u admin --password-stdin
+faas-cli version
