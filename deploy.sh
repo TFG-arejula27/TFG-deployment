@@ -26,3 +26,7 @@ helm repo update \
 
 PASSWORD=$(kubectl -n openfaas get secret basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode) && \
 echo "OpenFaaS admin password: $PASSWORD" 
+
+sleep 10
+
+kubectl port-forward -n openfaas svc/gateway 8080:8080 &
