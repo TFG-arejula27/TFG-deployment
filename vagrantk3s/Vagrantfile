@@ -40,12 +40,11 @@ Vagrant.configure("2") do |config|
                 path: 'provision.sh', 
                 args: [ node[:hostname], node[:ip], node[:m], node[:type] ]
             
-            # No hace caso al if ?
+           
             if node[:type] == "master"
               nodeconfig.trigger.after :up do |trigger|
-                trigger.run do |run|
-                 run.path = "config.sh"
-              end
+                trigger.run = \
+                        {inline: "sh -c 'cp k3s.yaml ~/.kube/config'"}
               end
             end
         end
