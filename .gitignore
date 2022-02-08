@@ -1,1 +1,4 @@
 *.vagrant
+vagrantk3s/temp/faas-netes
+vagrantk3s/k3s.yaml
+vagrantk3s/ubuntu-bionic-18.04-cloudimg-console.log
