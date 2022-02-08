@@ -37,3 +37,6 @@ OPENFAAS_URL="127.0.0.1:8080"
 
 echo -n $PASSWORD | faas-cli login -g $OPENFAAS_URL -u admin --password-stdin
 faas-cli version
+
+#grafana
+kubectl apply -f ./grafana.yaml
