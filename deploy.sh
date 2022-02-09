@@ -29,7 +29,7 @@ PASSWORD=$(kubectl -n openfaas get secret basic-auth -o jsonpath="{.data.basic-a
 echo "OpenFaaS admin password: $PASSWORD" 
 
 echo "Open faas desplegado, procedemos a exponerlo e iniciar sesión"
-sleep 10
+sleep 40 #wait until service is up
 
 kubectl port-forward -n openfaas svc/gateway 8080:8080 &
 
