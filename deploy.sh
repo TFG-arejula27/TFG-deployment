@@ -26,9 +26,6 @@ helm repo update \
     --namespace openfaas  \
     --set functionNamespace=openfaas-fn \
     --set generateBasicAuth=true \
-    --set ingress.enabled=true \
-    --set prometheus.create=false \
-    --set ingressOperator.create=true\
     --set gateway.upstreamTimeout=$TIMEOUT \
   	--set gateway.writeTimeout=$TIMEOUT \
   	--set gateway.readTimeout=$TIMEOUT \
@@ -52,7 +49,7 @@ faas-cli login -g ${OPENFAAS_URL} -u admin --password ${PASSWORD}
 faas-cli version
 
 #grafana
-kubectl apply -f graphana/.
+kubectl apply -f grafana/.
 
-sleep 15
+sleep 25
 kubectl port-forward svc/grafana 3000:3000 &
