@@ -12,6 +12,8 @@ echo "todo ok, lanzamiento de máquinas"
 cd vagrantk3s && vagrant up --no-paralle
 cd ..
 
+#instalamos prometheus
+kubectl apply -f prometheus/.
 #instalamos openFaas
 kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/namespaces.yml
 
@@ -25,6 +27,8 @@ helm repo update \
     --set functionNamespace=openfaas-fn \
     --set generateBasicAuth=true \
     --set ingress.enabled=true \
+    --set prometheus.create=false \
+    --set ingressOperator.create=true\
     --set gateway.upstreamTimeout=$TIMEOUT \
   	--set gateway.writeTimeout=$TIMEOUT \
   	--set gateway.readTimeout=$TIMEOUT \
@@ -48,7 +52,7 @@ faas-cli login -g ${OPENFAAS_URL} -u admin --password ${PASSWORD}
 faas-cli version
 
 #grafana
-kubectl apply -f ./grafana.yaml
+kubectl apply -f graphana/.
 
-sleep 10
-k port-forward svc/grafana 3000:3000 &
+sleep 15
+kubectl port-forward svc/grafana 3000:3000 &
