@@ -1,5 +1,5 @@
 #boxes
-Ubu = 'generic/ubuntu2010'
+Ubu = 'ubuntu/bionic64'
 #Deb = 'debian/buster64'
 
 # @ IP Master = 192.168.1.W9
@@ -8,10 +8,10 @@ Ubu = 'generic/ubuntu2010'
 # Valor ejemplo atribuido a alumnos al principio de asignatura, W = E (14)
 MASTER = '192.168.0.149'
 NODES = [
-  { hostname: 'm', type: "master", ip: MASTER, mem: 1000, m: MASTER,host:'155.210.158.19' },
-  { hostname: 'w1', type: "worker", ip: '192.168.0.141', mem: 1000, m: MASTER,host:'155.210.158.19' },
-  { hostname: 'w2', type: "worker", ip: '192.168.0.142', mem: 1000, m: MASTER,host:'155.210.158.19' },
-  { hostname: 'w3', type: "worker", ip: '192.168.0.143', mem: 1000, m: MASTER,host:'155.210.158.19' },
+  { hostname: 'm', type: "master", ip: MASTER, mem: 1000, m: MASTER },
+  { hostname: 'w1', type: "worker", ip: '192.168.0.141', mem: 1000, m: MASTER },
+  { hostname: 'w2', type: "worker", ip: '192.168.0.142', mem: 1000, m: MASTER },
+  { hostname: 'w3', type: "worker", ip: '192.168.0.143', mem: 1000, m: MASTER },
 ]
 
 Vagrant.configure("2") do |config|
@@ -20,8 +20,6 @@ Vagrant.configure("2") do |config|
             nodeconfig.vm.box = Ubu
             nodeconfig.vm.hostname = node[:hostname]
             
-            nodeconfig.vm.synced_folder '.', '/vagrant',type:"rsync"
-            
 
             nodeconfig.vm.network :public_network,
                     bridge: "enp4s0",
@@ -29,24 +27,9 @@ Vagrant.configure("2") do |config|
                     # virtualbox__intnet: true,
                     nic_type: "virtio"
             
-            nodeconfig.vm.provider :libvirt do |v|
-              #driver de kvm
-              v.driver = "kvm"
-              #dirección del host remoto
-              v.host = node[:host]
-              #usar ssh
-              v.connect_via_ssh=true
-              
-              v.username="iarejula"
-              v.id_ssh_key_file = "/home/arejula27/.ssh/id_rsa.pub"
-            
-              v.memory = node[:mem]
-              v.cpus = 1
-              v.keymap = 'es'
-              if node[:type] == "worker"
-                #v.storage :file, :size => '20G'
-                v.storage :file, :size => '30G',:bus=>'scsi', :allow_existing =>false
-              end
+            nodeconfig.vm.provider "virtualbox" do |v|
+                v.customize ["modifyvm",:id,"--memory",node[:mem],"--cpus","1"]
+                v.default_nic_type = "virtio"
 
             end
 
