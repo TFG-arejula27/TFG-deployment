@@ -10,7 +10,7 @@ fi
 
 faas-cli version >/dev/null 2>&1
 if [ $? -gt 0 ];then
-  echo "helm not installed"
+  echo "faas-cli not installed"
   exit 1
 fi
 echo "todo ok, lanzamiento de máquinas"
