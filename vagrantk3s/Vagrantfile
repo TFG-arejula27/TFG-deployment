@@ -9,9 +9,9 @@ Ubu = 'ubuntu/bionic64'
 MASTER = '192.168.0.149'
 NODES = [
   { hostname: 'm', type: "master", ip: MASTER, mem: 1000, m: MASTER },
-  { hostname: 'w1', type: "worker", ip: '192.168.0.141', mem: 1000, m: MASTER },
-  { hostname: 'w2', type: "worker", ip: '192.168.0.142', mem: 1000, m: MASTER },
-  { hostname: 'w3', type: "worker", ip: '192.168.0.143', mem: 1000, m: MASTER },
+  { hostname: 'w1', type: "worker", ip: '192.168.0.141', mem: 3000, m: MASTER },
+  { hostname: 'w2', type: "worker", ip: '192.168.0.142', mem: 3000, m: MASTER },
+  { hostname: 'w3', type: "worker", ip: '192.168.0.143', mem: 3000, m: MASTER },
 ]
 
 Vagrant.configure("2") do |config|
@@ -27,12 +27,20 @@ Vagrant.configure("2") do |config|
                     # virtualbox__intnet: true,
                     nic_type: "virtio"
             
+            if node[:type] == "master"
+
             nodeconfig.vm.provider "virtualbox" do |v|
                 v.customize ["modifyvm",:id,"--memory",node[:mem],"--cpus","1"]
                 v.default_nic_type = "virtio"
 
             end
-
+            else
+              nodeconfig.vm.provider "virtualbox" do |v|
+                   v.customize ["modifyvm",:id,"--memory",node[:mem],"--cpus","4"]
+                   v.default_nic_type = "virtio"
+  
+               end
+            end
                 
             nodeconfig.vm.boot_timeout = 400
             
