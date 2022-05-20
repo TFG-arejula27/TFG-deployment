@@ -14,9 +14,9 @@ echo $1 > /etc/hostname
 hostname $1
 
 # Valor ejemplo atribuido a alumnos al principio de asignatura, W = E (14)
-MASTER = '192.168.1.149'
-{ echo 192.168.1.149 m; echo 192.168.1.141 w1; echo 192.168.1.142 w2
-  echo 192.168.1.143 w3; cat /etc/hosts
+MASTER = '192.168.0.149'
+{ echo 192.168.0.149 m; echo 192.168.0.141 w1; echo 192.168.0.142 w2
+  echo 192.168.0.143 w3; cat /etc/hosts
 } > /etc/hosts.new
 mv /etc/hosts{.new,}
 

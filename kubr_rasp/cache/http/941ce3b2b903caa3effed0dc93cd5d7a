@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Content-Length: 302
+Audit-Id: b8ff31ca-a3af-43d3-b234-bdc63772780b
+Cache-Control: no-cache, private
+Content-Type: application/json
+Date: Thu, 17 Mar 2022 10:29:22 GMT
+X-Kubernetes-Pf-Flowschema-Uid: df1f5743-9aed-46e9-b822-4433c0b377a9
+X-Kubernetes-Pf-Prioritylevel-Uid: 5dda63eb-6a8c-480d-b415-f90808198b55
+
+{"kind":"APIResourceList","apiVersion":"v1","groupVersion":"node.k8s.io/v1beta1","resources":[{"name":"runtimeclasses","singularName":"","namespaced":false,"kind":"RuntimeClass","verbs":["create","delete","deletecollection","get","list","patch","update","watch"],"storageVersionHash":"WQTu1GL3T2Q="}]}

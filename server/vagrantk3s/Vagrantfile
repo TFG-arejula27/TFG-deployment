@@ -22,25 +22,24 @@ Vagrant.configure("2") do |config|
             
 
             nodeconfig.vm.network :public_network,
-                    bridge: "enp4s0",
+                    bridge: "enp96s0f0",
                     ip: node[:ip],
                     # virtualbox__intnet: true,
                     nic_type: "virtio"
-            
-            if node[:type] == "master"
+           
+		if node[:type] == "worker" 
+            	   nodeconfig.vm.provider "virtualbox" do |v|
+                	v.customize ["modifyvm",:id,"--memory",node[:mem],"--cpus","3"]
+                	v.default_nic_type = "virtio"
 
-            nodeconfig.vm.provider "virtualbox" do |v|
-                v.customize ["modifyvm",:id,"--memory",node[:mem],"--cpus","1"]
-                v.default_nic_type = "virtio"
+            		end
+		else
+		   nodeconfig.vm.provider "virtualbox" do |v|
+                        v.customize ["modifyvm",:id,"--memory",node[:mem],"--cpus","1"]
+                        v.default_nic_type = "virtio"
+		end
+	    end
 
-            end
-            else
-              nodeconfig.vm.provider "virtualbox" do |v|
-                   v.customize ["modifyvm",:id,"--memory",node[:mem],"--cpus","4"]
-                   v.default_nic_type = "virtio"
-  
-               end
-            end
                 
             nodeconfig.vm.boot_timeout = 400
             
