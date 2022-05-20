@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pymemo
+spec:
+  selector:
+    matchLabels:
+      run: pymemo
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: pymemo
+    spec:
+      containers:
+      - name: pymemo
+        image: arejula27/pymemo:flask
+        ports:
+        - containerPort: 5000
+
